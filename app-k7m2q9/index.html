@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#34452B">
+<title>Plantadeira na Medida: calculadora</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icone.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icone-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --oliva:#34452B; --oliva2:#46593a; --amarelo:#F4B831; --grafite:#242824; --bege:#E5DFD2; --bege2:#F3EFE6;
+  --branco:#fff; --verde-ok:#2f7d32; --alerta:#c98a00; --erro:#b3261e; --linha:#d8d1c2;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bege2);color:var(--grafite);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:17px;line-height:1.45;-webkit-text-size-adjust:100%}
+h1,h2,h3,.num{font-family:Archivo,Inter,system-ui,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--oliva);color:#fff;padding:calc(10px + env(safe-area-inset-top)) 16px 12px;display:flex;align-items:center;gap:12px}
+header button{background:rgba(255,255,255,.14);border:0;color:#fff;width:42px;height:42px;border-radius:12px;font-size:22px;display:none}
+header.com-voltar button{display:block}
+header h1{font-size:19px;margin:0;font-weight:800;letter-spacing:.2px}
+header small{display:block;font-family:Inter;font-weight:500;opacity:.8;font-size:12.5px}
+main{max-width:560px;margin:0 auto;padding:16px 16px 90px}
+.tela{display:none}.tela.ativa{display:block}
+.grade{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cartao-menu{background:#fff;border:1px solid var(--linha);border-radius:16px;padding:16px 14px;text-align:left;font:inherit;color:inherit;min-height:112px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 1px 0 rgba(0,0,0,.04)}
+.cartao-menu b{font-family:Archivo;font-size:17px;line-height:1.2}
+.cartao-menu span{font-size:13px;color:#5d6157}
+.cartao-menu i{font-style:normal;font-size:26px}
+.cartao-menu.destaque{background:var(--oliva);color:#fff;border-color:var(--oliva)}
+.cartao-menu.destaque span{color:#dfe6d6}
+.faixa{background:var(--amarelo);color:var(--grafite);border-radius:14px;padding:12px 14px;font-size:14.5px;margin:0 0 14px}
+.bloco{background:#fff;border:1px solid var(--linha);border-radius:16px;padding:16px;margin-bottom:14px}
+.bloco h2{font-size:18px;margin:0 0 4px}
+.bloco p.dica{margin:0 0 12px;color:#5d6157;font-size:14px}
+label{display:block;font-weight:600;font-size:14.5px;margin:12px 0 6px}
+label small{font-weight:400;color:#6b6f65}
+input,select{width:100%;font:inherit;font-size:19px;padding:12px 14px;border:1.5px solid #c9c1b0;border-radius:12px;background:#fff;color:var(--grafite)}
+input:focus,select:focus{outline:3px solid rgba(244,184,49,.55);border-color:var(--oliva)}
+.atalhos{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.atalhos button{border:1.5px solid var(--oliva);background:#fff;color:var(--oliva);border-radius:999px;padding:7px 12px;font:inherit;font-size:14px;font-weight:600}
+.atalhos button.on{background:var(--oliva);color:#fff}
+.lado{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.resultado{background:var(--grafite);color:#fff;border-radius:18px;padding:18px;margin:14px 0}
+.resultado .rotulo{font-size:13.5px;opacity:.8;text-transform:uppercase;letter-spacing:.6px}
+.resultado .num{font-size:40px;font-weight:800;line-height:1.05;color:var(--amarelo);margin:4px 0 2px}
+.resultado .num small{font-size:18px;color:#fff;font-weight:700}
+.resultado .linha{display:flex;justify-content:space-between;gap:12px;border-top:1px solid rgba(255,255,255,.14);padding-top:10px;margin-top:10px;font-size:15.5px}
+.resultado .linha b{font-family:Archivo;font-size:18px}
+.resultado.vazio .num{color:#8d9188}
+.selo{display:inline-block;border-radius:999px;padding:4px 10px;font-weight:700;font-size:13.5px;margin-top:8px}
+.selo.ok{background:#e3f1e3;color:var(--verde-ok)}.selo.meio{background:#fff4d6;color:#8a5d00}.selo.fora{background:#fbe3e1;color:var(--erro)}
+.erro{color:var(--erro);font-size:14px;margin-top:8px;min-height:1em}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:15px;font:inherit;font-weight:700;font-size:17px;background:var(--amarelo);color:var(--grafite);margin-top:12px}
+.btn.sec{background:#fff;border:1.5px solid var(--oliva);color:var(--oliva)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+td,th{padding:8px 6px;border-bottom:1px solid #e6e0d3;text-align:left}
+th{font-size:12.5px;text-transform:uppercase;letter-spacing:.5px;color:#6b6f65}
+td.n{text-align:right;font-family:Archivo;font-weight:700}
+.lista-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #e6e0d3}
+.lista-item:last-child{border-bottom:0}
+.lista-item button{border:0;background:none;color:var(--erro);font:inherit;font-size:14px}
+.vazio-txt{color:#6b6f65;font-size:14.5px}
+.rodape{font-size:12.5px;color:#6b6f65;text-align:center;margin-top:24px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--grafite);color:#fff;padding:12px 18px;border-radius:12px;font-size:15px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:9}
+.toast.on{opacity:1}
+@media (max-width:360px){.grade{grid-template-columns:1fr}.resultado .num{font-size:34px}}
+</style>
+</head>
+<body>
+<header id="topo">
+  <button id="voltar" aria-label="Voltar">‹</button>
+  <div><h1 id="titulo">Plantadeira na Medida</h1><small id="subtitulo">A conta pronta da sua regulagem</small></div>
+</header>
+<main>
+
+<!-- INÍCIO -->
+<section class="tela ativa" id="t-inicio">
+  <p class="faixa">Escolha o que você quer calcular. As contas usam os números que <b>você</b> informa (população, dose e espaçamento definidos para a sua lavoura).</p>
+  <div class="grade">
+    <button class="cartao-menu destaque" data-ir="sementes"><i>🌽</i><b>Quantas sementes por metro</b><span>População e espaçamento</span></button>
+    <button class="cartao-menu destaque" data-ir="adubo"><i>⚖️</i><b>Quantos gramas de adubo</b><span>Por metro e no teste de coleta</span></button>
+    <button class="cartao-menu" data-ir="conf-sementes"><i>🔍</i><b>Conferir sementes</b><span>Contei no chão, está certo?</span></button>
+    <button class="cartao-menu" data-ir="conf-adubo"><i>✅</i><b>Conferir adubo</b><span>Pesei a coleta de cada linha</span></button>
+    <button class="cartao-menu" data-ir="catracas"><i>⚙️</i><b>Catracas</b><span>Qual troca acerta a dose</span></button>
+    <button class="cartao-menu" data-ir="voltas"><i>🛞</i><b>Teste pela roda</b><span>Voltas da roda em metros</span></button>
+    <button class="cartao-menu" data-ir="planejar"><i>📋</i><b>Planejar a safra</b><span>Sementes e adubo da área</span></button>
+    <button class="cartao-menu" data-ir="area"><i>📐</i><b>Converter área</b><span>Alqueire, tarefa, hectare</span></button>
+    <button class="cartao-menu" data-ir="maquinas"><i>🚜</i><b>Minhas plantadeiras</b><span>Salve linhas e espaçamento</span></button>
+    <button class="cartao-menu" data-ir="historico"><i>🗂️</i><b>Histórico</b><span>Regulagens salvas</span></button>
+  </div>
+  <p class="rodape">Ferramenta de apoio para conferência. Não substitui a recomendação do responsável técnico nem o manual do fabricante da sua máquina.</p>
+</section>
+
+<!-- SEMENTES -->
+<section class="tela" id="t-sementes" data-titulo="Sementes por metro">
+  <div class="bloco">
+    <h2>Quantas sementes têm que cair</h2>
+    <p class="dica">Informe a população que você quer por hectare e o espaçamento entre as linhas.</p>
+    <label>População desejada <small>(sementes ou plantas por hectare)</small></label>
+    <input id="s-pop" inputmode="decimal" placeholder="Ex.: 60.000">
+    <div class="atalhos" data-alvo="s-pop"><button>60000</button><button>70000</button><button>250000</button><button>300000</button></div>
+    <label>Espaçamento entre linhas <small>(cm)</small></label>
+    <input id="s-esp" inputmode="decimal" placeholder="Ex.: 45" class="campo-esp">
+    <div class="atalhos" data-alvo="s-esp"><button>45</button><button>50</button><button>70</button><button>80</button><button>90</button></div>
+    <div class="lado">
+      <div><label>Germinação <small>(% opcional)</small></label><input id="s-germ" inputmode="decimal" placeholder="100"></div>
+      <div><label>Metros do teste</label><input id="s-met" inputmode="decimal" value="10"></div>
+    </div>
+    <div class="erro" id="s-erro"></div>
+  </div>
+  <div class="resultado vazio" id="s-res">
+    <div class="rotulo">Sementes por metro</div>
+    <div class="num" id="s-porm">-</div>
+    <div class="linha"><span>No teste de <span id="s-metlbl">10</span> m</span><b id="s-teste">-</b></div>
+    <div class="linha"><span>Uma semente a cada</span><b id="s-dist">-</b></div>
+    <div class="linha"><span>Sementes por hectare a distribuir</span><b id="s-ha">-</b></div>
+  </div>
+  <button class="btn sec" data-salvar="sementes">Salvar no histórico</button>
+</section>
+
+<!-- ADUBO -->
+<section class="tela" id="t-adubo" data-titulo="Gramas de adubo">
+  <div class="bloco">
+    <h2>Quantos gramas têm que cair</h2>
+    <p class="dica">Informe a dose em kg por hectare e o espaçamento. O teste de coleta mostra quanto pesar em cada linha.</p>
+    <label>Dose de adubo <small>(kg por hectare)</small></label>
+    <input id="a-kg" inputmode="decimal" placeholder="Ex.: 300">
+    <div class="atalhos" data-alvo="a-kg"><button>200</button><button>250</button><button>300</button><button>350</button><button>400</button></div>
+    <label>Espaçamento entre linhas <small>(cm)</small></label>
+    <input id="a-esp" inputmode="decimal" placeholder="Ex.: 45" class="campo-esp">
+    <div class="atalhos" data-alvo="a-esp"><button>45</button><button>50</button><button>70</button><button>80</button><button>90</button></div>
+    <div class="lado">
+      <div><label>Metros do teste</label><input id="a-met" inputmode="decimal" value="50"></div>
+      <div><label>Nº de linhas</label><input id="a-lin" inputmode="decimal" placeholder="Ex.: 4" class="campo-lin"></div>
+    </div>
+    <div class="erro" id="a-erro"></div>
+  </div>
+  <div class="resultado vazio" id="a-res">
+    <div class="rotulo">Gramas por metro de linha</div>
+    <div class="num" id="a-gm">-</div>
+    <div class="linha"><span>Coletar por linha em <span id="a-metlbl">50</span> m</span><b id="a-teste">-</b></div>
+    <div class="linha"><span>Somando todas as linhas</span><b id="a-total">-</b></div>
+  </div>
+  <button class="btn sec" data-salvar="adubo">Salvar no histórico</button>
+</section>
+
+<!-- CONFERIR SEMENTES -->
+<section class="tela" id="t-conf-sementes" data-titulo="Conferir sementes">
+  <div class="bloco">
+    <h2>Contei as sementes. Está certo?</h2>
+    <p class="dica">Conte as sementes em um trecho da linha (com a máquina regulada) e compare com o que deveria cair.</p>
+    <div class="lado">
+      <div><label>Sementes contadas</label><input id="cs-cont" inputmode="decimal" placeholder="Ex.: 26"></div>
+      <div><label>Em quantos metros</label><input id="cs-met" inputmode="decimal" value="10"></div>
+    </div>
+    <label>Espaçamento <small>(cm)</small></label>
+    <input id="cs-esp" inputmode="decimal" placeholder="Ex.: 45" class="campo-esp">
+    <label>Quanto deveria cair por metro <small>(da tela Sementes)</small></label>
+    <input id="cs-alvo" inputmode="decimal" placeholder="Ex.: 2,7">
+    <label>Diferença aceita <small>(% que você usa como referência)</small></label>
+    <input id="cs-tol" inputmode="decimal" value="5">
+    <div class="erro" id="cs-erro"></div>
+  </div>
+  <div class="resultado vazio" id="cs-res">
+    <div class="rotulo">Caiu por metro</div>
+    <div class="num" id="cs-porm">-</div>
+    <div class="linha"><span>Isso dá por hectare</span><b id="cs-ha">-</b></div>
+    <div class="linha"><span>Diferença para o planejado</span><b id="cs-dif">-</b></div>
+    <span class="selo" id="cs-selo" hidden></span>
+  </div>
+  <button class="btn sec" data-salvar="conf-sementes">Salvar no histórico</button>
+</section>
+
+<!-- CONFERIR ADUBO -->
+<section class="tela" id="t-conf-adubo" data-titulo="Conferir adubo">
+  <div class="bloco">
+    <h2>Pesei a coleta. Está certo?</h2>
+    <p class="dica">Colete o adubo de cada linha no mesmo trecho, pese e anote. A calculadora mostra a dose real de cada linha.</p>
+    <div class="lado">
+      <div><label>Metros do teste</label><input id="ca-met" inputmode="decimal" value="50"></div>
+      <div><label>Espaçamento <small>(cm)</small></label><input id="ca-esp" inputmode="decimal" placeholder="45" class="campo-esp"></div>
+    </div>
+    <div class="lado">
+      <div><label>Dose desejada <small>(kg/ha)</small></label><input id="ca-alvo" inputmode="decimal" placeholder="300"></div>
+      <div><label>Nº de linhas</label><input id="ca-lin" inputmode="decimal" value="4" class="campo-lin"></div>
+    </div>
+    <div id="ca-linhas"></div>
+    <label>Diferença aceita <small>(% de referência)</small></label>
+    <input id="ca-tol" inputmode="decimal" value="5">
+    <div class="erro" id="ca-erro"></div>
+  </div>
+  <div class="resultado vazio" id="ca-res">
+    <div class="rotulo">Dose real (média das linhas)</div>
+    <div class="num" id="ca-kg">-</div>
+    <div class="linha"><span>Diferença para o planejado</span><b id="ca-dif">-</b></div>
+    <div class="linha"><span>Variação entre as linhas</span><b id="ca-var">-</b></div>
+    <span class="selo" id="ca-selo" hidden></span>
+    <table id="ca-tab" style="margin-top:12px;color:#fff"></table>
+  </div>
+  <button class="btn" data-ir="catracas" id="ca-ir-catraca">Calcular a troca de catracas</button>
+  <button class="btn sec" data-salvar="conf-adubo">Salvar no histórico</button>
+</section>
+
+<!-- CATRACAS -->
+<section class="tela" id="t-catracas" data-titulo="Catracas">
+  <div class="bloco">
+    <h2>Qual troca de catraca acerta a dose</h2>
+    <p class="dica">Para máquinas com transmissão por corrente: a quantidade que cai muda na mesma proporção da relação entre a catraca motora e a movida. Confira o lado de cada catraca no manual da sua máquina.</p>
+    <div class="lado">
+      <div><label>Motora atual <small>(dentes)</small></label><input id="c-mot" inputmode="decimal" placeholder="20"></div>
+      <div><label>Movida atual <small>(dentes)</small></label><input id="c-mov" inputmode="decimal" placeholder="30"></div>
+    </div>
+    <div class="lado">
+      <div><label>Está caindo</label><input id="c-real" inputmode="decimal" placeholder="Ex.: 275"></div>
+      <div><label>Quero que caia</label><input id="c-alvo" inputmode="decimal" placeholder="Ex.: 300"></div>
+    </div>
+    <p class="dica" style="margin-top:8px">Use a mesma unidade nos dois campos (kg/ha, gramas no teste ou sementes por metro).</p>
+    <label>Catracas motoras que você tem <small>(separe por vírgula)</small></label>
+    <input id="c-mots" placeholder="Ex.: 14, 16, 18, 20, 22, 24">
+    <label>Catracas movidas que você tem</label>
+    <input id="c-movs" placeholder="Ex.: 24, 26, 28, 30, 32">
+    <div class="erro" id="c-erro"></div>
+  </div>
+  <div class="resultado vazio" id="c-res">
+    <div class="rotulo">Relação nova (motora ÷ movida)</div>
+    <div class="num" id="c-rel">-</div>
+    <div class="linha"><span>Relação atual</span><b id="c-relat">-</b></div>
+    <div class="linha"><span>Ajuste necessário</span><b id="c-aj">-</b></div>
+    <table id="c-tab" style="margin-top:12px;color:#fff"></table>
+  </div>
+  <p class="dica">Depois de trocar, faça o teste de coleta de novo e confira.</p>
+  <button class="btn sec" data-salvar="catracas">Salvar no histórico</button>
+</section>
+
+<!-- VOLTAS -->
+<section class="tela" id="t-voltas" data-titulo="Teste pela roda">
+  <div class="bloco">
+    <h2>Voltas da roda em metros</h2>
+    <p class="dica">Para o teste com a roda motriz suspensa ou contando as voltas no campo. Meça o diâmetro (ou o perímetro com uma fita) da roda que move a transmissão.</p>
+    <label>Número de voltas</label>
+    <input id="v-volt" inputmode="decimal" placeholder="Ex.: 20">
+    <div class="lado">
+      <div><label>Diâmetro <small>(cm)</small></label><input id="v-diam" inputmode="decimal" placeholder="Ex.: 60"></div>
+      <div><label>ou Perímetro <small>(cm)</small></label><input id="v-per" inputmode="decimal" placeholder="Ex.: 188"></div>
+    </div>
+    <label>Patinagem <small>(% opcional, se você tiver medido)</small></label>
+    <input id="v-pat" inputmode="decimal" placeholder="0">
+    <div class="erro" id="v-erro"></div>
+  </div>
+  <div class="resultado vazio" id="v-res">
+    <div class="rotulo">Distância equivalente</div>
+    <div class="num" id="v-met">-</div>
+    <div class="linha"><span>Perímetro usado</span><b id="v-perim">-</b></div>
+  </div>
+</section>
+
+<!-- PLANEJAR -->
+<section class="tela" id="t-planejar" data-titulo="Planejar a safra">
+  <div class="bloco">
+    <h2>Quanto vou precisar</h2>
+    <div class="lado">
+      <div><label>Área</label><input id="p-area" inputmode="decimal" placeholder="Ex.: 10"></div>
+      <div><label>Unidade</label><select id="p-un"></select></div>
+    </div>
+    <div class="lado">
+      <div><label>População <small>(sem./ha)</small></label><input id="p-pop" inputmode="decimal" placeholder="60000"></div>
+      <div><label>Germinação <small>(%)</small></label><input id="p-germ" inputmode="decimal" placeholder="100"></div>
+    </div>
+    <label>Sementes por saco <small>(opcional, veja na embalagem)</small></label>
+    <input id="p-saco" inputmode="decimal" placeholder="Ex.: 60000">
+    <div class="lado">
+      <div><label>Adubo <small>(kg/ha)</small></label><input id="p-kg" inputmode="decimal" placeholder="300"></div>
+      <div><label>Saco de adubo <small>(kg)</small></label><input id="p-sacokg" inputmode="decimal" value="50"></div>
+    </div>
+    <div class="erro" id="p-erro"></div>
+  </div>
+  <div class="resultado vazio" id="p-res">
+    <div class="rotulo">Área em hectares</div>
+    <div class="num" id="p-ha">-</div>
+    <div class="linha"><span>Sementes no total</span><b id="p-sem">-</b></div>
+    <div class="linha"><span>Sacos de semente</span><b id="p-sacos">-</b></div>
+    <div class="linha"><span>Adubo no total</span><b id="p-adkg">-</b></div>
+    <div class="linha"><span>Sacos de adubo</span><b id="p-adsc">-</b></div>
+  </div>
+</section>
+
+<!-- ÁREA -->
+<section class="tela" id="t-area" data-titulo="Converter área">
+  <div class="bloco">
+    <h2>Converter área</h2>
+    <div class="lado">
+      <div><label>Quantidade</label><input id="ar-val" inputmode="decimal" placeholder="Ex.: 5"></div>
+      <div><label>Unidade</label><select id="ar-un"></select></div>
+    </div>
+    <p class="dica" style="margin-top:10px">Alqueire e tarefa mudam de região para região. Os valores usados aqui são os mais comuns; confira o da sua região.</p>
+    <div class="erro" id="ar-erro"></div>
+  </div>
+  <div class="resultado vazio" id="ar-res">
+    <div class="rotulo">Em hectares</div>
+    <div class="num" id="ar-ha">-</div>
+    <table id="ar-tab" style="margin-top:12px;color:#fff"></table>
+  </div>
+</section>
+
+<!-- MÁQUINAS -->
+<section class="tela" id="t-maquinas" data-titulo="Minhas plantadeiras">
+  <div class="bloco">
+    <h2>Cadastrar plantadeira</h2>
+    <p class="dica">Salve o espaçamento e o número de linhas para não digitar de novo. Fica guardado neste celular.</p>
+    <label>Nome</label><input id="m-nome" placeholder="Ex.: Plantadeira 4 linhas">
+    <div class="lado">
+      <div><label>Linhas</label><input id="m-lin" inputmode="decimal" placeholder="4"></div>
+      <div><label>Espaçamento <small>(cm)</small></label><input id="m-esp" inputmode="decimal" placeholder="45"></div>
+    </div>
+    <button class="btn" id="m-salvar">Salvar plantadeira</button>
+    <div class="erro" id="m-erro"></div>
+  </div>
+  <div class="bloco"><h2>Salvas</h2><div id="m-lista"></div></div>
+</section>
+
+<!-- HISTÓRICO -->
+<section class="tela" id="t-historico" data-titulo="Histórico">
+  <div class="bloco"><h2>Regulagens salvas</h2><p class="dica">Ficam guardadas neste celular.</p><div id="h-lista"></div></div>
+</section>
+
+</main>
+<div class="toast" id="toast"></div>
+
+<script src="nucleo.js"></script>
+<script>
+(function(){
+  'use strict';
+  var P = window.PNM, $ = function(id){ return document.getElementById(id); };
+  var f = P.fmt;
+
+  // Armazenamento local protegido (modo anônimo pode bloquear).
+  function ler(chave, padrao){ try { var v = localStorage.getItem(chave); return v ? JSON.parse(v) : padrao; } catch(e){ return padrao; } }
+  function gravar(chave, valor){ try { localStorage.setItem(chave, JSON.stringify(valor)); return true; } catch(e){ return false; } }
+  function toast(msg){ var t=$('toast'); t.textContent=msg; t.classList.add('on'); setTimeout(function(){ t.classList.remove('on'); }, 2200); }
+
+  // Navegação
+  function ir(tela){
+    document.querySelectorAll('.tela').forEach(function(s){ s.classList.remove('ativa'); });
+    var s = $('t-' + tela) || $('t-inicio'); s.classList.add('ativa');
+    var inicio = s.id === 't-inicio';
+    $('topo').classList.toggle('com-voltar', !inicio);
+    $('titulo').textContent = inicio ? 'Plantadeira na Medida' : s.dataset.titulo;
+    $('subtitulo').textContent = inicio ? 'A conta pronta da sua regulagem' : 'Plantadeira na Medida';
+    if (location.hash.slice(1) !== tela) history.pushState(null, '', inicio ? '#' : '#' + tela);
+    window.scrollTo(0,0);
+    if (tela === 'maquinas') listarMaquinas();
+    if (tela === 'historico') listarHistorico();
+    if (tela === 'conf-adubo') montarLinhasAdubo();
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-ir]'); if (b){ e.preventDefault(); ir(b.dataset.ir); }
+    var a = e.target.closest('.atalhos button');
+    if (a){ var alvo = $(a.parentNode.dataset.alvo); alvo.value = a.textContent; alvo.dispatchEvent(new Event('input', {bubbles:true})); }
+  });
+  $('voltar').addEventListener('click', function(){ history.length > 1 ? history.back() : ir('inicio'); });
+  window.addEventListener('popstate', function(){ ir(location.hash.slice(1) || 'inicio'); });
+
+  function vazio(id, sim){ $(id).classList.toggle('vazio', sim); }
+  function seguro(fn, idErro, idRes){
+    try { fn(); $(idErro).textContent=''; } catch(e){ $(idErro).textContent = e.message; vazio(idRes, true); }
+  }
+  function preenchido(){ for (var i=0;i<arguments.length;i++){ if (!$(arguments[i]).value.trim()) return false; } return true; }
+  function seloDif(el, dif, tol){
+    var t = Math.abs(tol) || 5, a = Math.abs(dif);
+    el.hidden = false;
+    if (a <= t){ el.className='selo ok'; el.textContent='Dentro da sua referência (±' + f(t,0) + '%)'; }
+    else if (a <= t*2){ el.className='selo meio'; el.textContent='Um pouco fora: ajuste e teste de novo'; }
+    else { el.className='selo fora'; el.textContent='Fora: precisa ajustar'; }
+  }
+  function sinal(x, casas){ return (x > 0 ? '+' : '') + f(x, casas) + '%'; }
+
+  // Sementes
+  var ultimo = {};
+  function calcSementes(){
+    if (!preenchido('s-pop','s-esp')) { vazio('s-res', true); return; }
+    seguro(function(){
+      var r = P.sementes({ populacao: $('s-pop').value, espacamentoCm: $('s-esp').value, germinacao: $('s-germ').value, metrosTeste: $('s-met').value || null });
+      $('s-porm').innerHTML = f(r.porMetro, 2) + ' <small>por metro</small>';
+      $('s-metlbl').textContent = f(r.metrosTeste || 0, 0);
+      $('s-teste').textContent = r.noTeste != null ? f(r.noTeste, 0) + ' sementes' : '-';
+      $('s-dist').textContent = f(r.distanciaCm, 1) + ' cm';
+      $('s-ha').textContent = f(r.sementesDistribuirHa, 0);
+      vazio('s-res', false);
+      ultimo.sementes = 'Sementes: ' + f(r.porMetro,2) + '/m (pop. ' + $('s-pop').value + ', ' + $('s-esp').value + ' cm' + ($('s-germ').value ? ', germ. ' + $('s-germ').value + '%' : '') + ')';
+    }, 's-erro', 's-res');
+  }
+  ['s-pop','s-esp','s-germ','s-met'].forEach(function(id){ $(id).addEventListener('input', calcSementes); });
+
+  // Adubo
+  function calcAdubo(){
+    if (!preenchido('a-kg','a-esp')) { vazio('a-res', true); return; }
+    seguro(function(){
+      var r = P.adubo({ kgHa: $('a-kg').value, espacamentoCm: $('a-esp').value, metrosTeste: $('a-met').value || null, linhas: $('a-lin').value || null });
+      $('a-gm').innerHTML = f(r.gramasPorMetro, 1) + ' <small>g por metro</small>';
+      $('a-metlbl').textContent = f(r.metrosTeste || 0, 0);
+      $('a-teste').textContent = r.gramasNoTestePorLinha != null ? f(r.gramasNoTestePorLinha, 0) + ' g' : '-';
+      $('a-total').textContent = r.gramasNoTesteTodasLinhas != null ? f(r.gramasNoTesteTodasLinhas, 0) + ' g' : 'informe as linhas';
+      vazio('a-res', false);
+      ultimo.adubo = 'Adubo: ' + f(r.gramasPorMetro,1) + ' g/m, ' + (r.gramasNoTestePorLinha ? f(r.gramasNoTestePorLinha,0) + ' g em ' + f(r.metrosTeste,0) + ' m' : '') + ' (' + $('a-kg').value + ' kg/ha, ' + $('a-esp').value + ' cm)';
+    }, 'a-erro', 'a-res');
+  }
+  ['a-kg','a-esp','a-met','a-lin'].forEach(function(id){ $(id).addEventListener('input', calcAdubo); });
+
+  // Conferir sementes
+  function calcConfSem(){
+    if (!preenchido('cs-cont','cs-met','cs-esp')) { vazio('cs-res', true); $('cs-selo').hidden = true; return; }
+    seguro(function(){
+      var r = P.conferirSementes({ contadas: $('cs-cont').value, metros: $('cs-met').value, espacamentoCm: $('cs-esp').value, esperadoPorMetro: $('cs-alvo').value || null });
+      $('cs-porm').innerHTML = f(r.porMetro, 2) + ' <small>por metro</small>';
+      $('cs-ha').textContent = f(r.porHa, 0) + ' /ha';
+      if (r.diferencaPct != null){ $('cs-dif').textContent = sinal(r.diferencaPct, 1); seloDif($('cs-selo'), r.diferencaPct, Number(($('cs-tol').value||'5').replace(',','.'))); }
+      else { $('cs-dif').textContent = 'informe o esperado'; $('cs-selo').hidden = true; }
+      vazio('cs-res', false);
+      ultimo['conf-sementes'] = 'Conferência sementes: ' + f(r.porMetro,2) + '/m' + (r.diferencaPct != null ? ' (' + sinal(r.diferencaPct,1) + ')' : '');
+    }, 'cs-erro', 'cs-res');
+  }
+  ['cs-cont','cs-met','cs-esp','cs-alvo','cs-tol'].forEach(function(id){ $(id).addEventListener('input', calcConfSem); });
+
+  // Conferir adubo
+  function montarLinhasAdubo(){
+    var n = Math.min(Math.max(parseInt($('ca-lin').value,10) || 1, 1), 24);
+    var box = $('ca-linhas'), atuais = box.querySelectorAll('input').length;
+    if (atuais === n) return;
+    var valores = [].map.call(box.querySelectorAll('input'), function(i){ return i.value; });
+    box.innerHTML = '';
+    for (var i=0;i<n;i++){
+      var w = document.createElement('div');
+      w.innerHTML = '<label>Linha ' + (i+1) + ' <small>(gramas coletados)</small></label><input inputmode="decimal" placeholder="Ex.: 675">';
+      w.querySelector('input').value = valores[i] || '';
+      w.querySelector('input').addEventListener('input', calcConfAdubo);
+      box.appendChild(w);
+    }
+  }
+  function calcConfAdubo(){
+    var g = [].map.call($('ca-linhas').querySelectorAll('input'), function(i){ return i.value.trim(); }).filter(Boolean);
+    if (!preenchido('ca-met','ca-esp') || !g.length) { vazio('ca-res', true); $('ca-selo').hidden = true; $('ca-tab').innerHTML=''; return; }
+    seguro(function(){
+      var r = P.conferirAdubo({ gramas: g, metros: $('ca-met').value, espacamentoCm: $('ca-esp').value, kgHaDesejado: $('ca-alvo').value || null });
+      $('ca-kg').innerHTML = f(r.kgHaMedio, 0) + ' <small>kg/ha</small>';
+      $('ca-dif').textContent = r.diferencaPct != null ? sinal(r.diferencaPct, 1) : 'informe a dose desejada';
+      $('ca-var').textContent = r.linhas.length > 1 ? f(r.variacaoEntreLinhasPct, 1) + '%' : '-';
+      if (r.diferencaPct != null) seloDif($('ca-selo'), r.diferencaPct, Number(($('ca-tol').value||'5').replace(',','.'))); else $('ca-selo').hidden = true;
+      $('ca-tab').innerHTML = '<tr><th>Linha</th><th>Gramas</th><th style="text-align:right">kg/ha</th><th style="text-align:right">Dif.</th></tr>' +
+        r.linhas.map(function(l,i){ return '<tr><td>' + (i+1) + '</td><td>' + f(l.gramas,0) + ' g</td><td class="n">' + f(l.kgHa,0) + '</td><td class="n">' + (l.diferencaPct != null ? sinal(l.diferencaPct,1) : '-') + '</td></tr>'; }).join('');
+      vazio('ca-res', false);
+      ultimo['conf-adubo'] = 'Conferência adubo: ' + f(r.kgHaMedio,0) + ' kg/ha' + (r.diferencaPct != null ? ' (' + sinal(r.diferencaPct,1) + ')' : '') + ', ' + r.linhas.length + ' linhas';
+      // Leva o resultado para a tela de catracas.
+      $('c-real').value = f(r.kgHaMedio, 0).replace(/\./g,'');
+      if ($('ca-alvo').value) $('c-alvo').value = $('ca-alvo').value;
+    }, 'ca-erro', 'ca-res');
+  }
+  $('ca-lin').addEventListener('input', function(){ montarLinhasAdubo(); calcConfAdubo(); });
+  ['ca-met','ca-esp','ca-alvo','ca-tol'].forEach(function(id){ $(id).addEventListener('input', calcConfAdubo); });
+
+  // Catracas
+  function listaNums(s){ return s.split(/[;,\s]+/).map(function(x){ return Number(x.replace(',','.')); }).filter(function(x){ return x > 0; }); }
+  function calcCatracas(){
+    if (!preenchido('c-mot','c-mov','c-real','c-alvo')) { vazio('c-res', true); $('c-tab').innerHTML=''; return; }
+    seguro(function(){
+      var r = P.catracas({ motoraAtual: $('c-mot').value, movidaAtual: $('c-mov').value, resultadoAtual: $('c-real').value, resultadoDesejado: $('c-alvo').value,
+        motorasDisponiveis: listaNums($('c-mots').value), movidasDisponiveis: listaNums($('c-movs').value) });
+      $('c-rel').textContent = f(r.relacaoNova, 3);
+      $('c-relat').textContent = f(r.relacaoAtual, 3);
+      $('c-aj').textContent = sinal(r.ajustePct, 1);
+      $('c-tab').innerHTML = r.sugestoes.length ? '<tr><th>Motora</th><th>Movida</th><th style="text-align:right">Vai cair</th><th style="text-align:right">Erro</th></tr>' +
+        r.sugestoes.map(function(s){ return '<tr><td>' + s.motora + '</td><td>' + s.movida + '</td><td class="n">' + f(s.resultadoPrevisto, 1) + '</td><td class="n">' + sinal(s.erroPct,1) + '</td></tr>'; }).join('')
+        : '<tr><td>Informe as catracas que você tem para ver as melhores combinações.</td></tr>';
+      vazio('c-res', false);
+      ultimo.catracas = 'Catracas: relação nova ' + f(r.relacaoNova,3) + (r.sugestoes[0] ? ', sugestão ' + r.sugestoes[0].motora + '/' + r.sugestoes[0].movida : '');
+    }, 'c-erro', 'c-res');
+  }
+  ['c-mot','c-mov','c-real','c-alvo','c-mots','c-movs'].forEach(function(id){ $(id).addEventListener('input', calcCatracas); });
+
+  // Voltas
+  function calcVoltas(){
+    if (!$('v-volt').value.trim() || (!$('v-diam').value.trim() && !$('v-per').value.trim())) { vazio('v-res', true); return; }
+    seguro(function(){
+      var r = P.distanciaPorVoltas({ voltas: $('v-volt').value, diametroCm: $('v-diam').value, perimetroCm: $('v-per').value || null, patinagemPct: $('v-pat').value });
+      $('v-met').innerHTML = f(r.metros, 2) + ' <small>metros</small>';
+      $('v-perim').textContent = f(r.perimetroCm, 1) + ' cm';
+      vazio('v-res', false);
+    }, 'v-erro', 'v-res');
+  }
+  ['v-volt','v-diam','v-per','v-pat'].forEach(function(id){ $(id).addEventListener('input', calcVoltas); });
+
+  // Unidades de área
+  ['p-un','ar-un'].forEach(function(id){
+    var sel = $(id);
+    Object.keys(P.UNIDADES_AREA).forEach(function(k){ var o = document.createElement('option'); o.value = k; o.textContent = P.UNIDADES_AREA[k].nome; sel.appendChild(o); });
+  });
+  $('p-un').value = 'hectare'; $('ar-un').value = 'alqueire_paulista';
+
+  function calcPlanejar(){
+    if (!$('p-area').value.trim()) { vazio('p-res', true); return; }
+    seguro(function(){
+      var r = P.planejamento({ area: $('p-area').value, unidade: $('p-un').value, populacao: $('p-pop').value, germinacao: $('p-germ').value,
+        sementesPorSaco: $('p-saco').value || null, kgHa: $('p-kg').value, kgPorSacoAdubo: $('p-sacokg').value || null });
+      $('p-ha').innerHTML = f(r.hectares, 2) + ' <small>ha</small>';
+      $('p-sem').textContent = r.sementesTotal != null ? f(r.sementesTotal, 0) : '-';
+      $('p-sacos').textContent = r.sacosSementes != null ? f(Math.ceil(r.sacosSementes * 100) / 100, 2) : '-';
+      $('p-adkg').textContent = r.aduboKg != null ? f(r.aduboKg, 0) + ' kg' : '-';
+      $('p-adsc').textContent = r.sacosAdubo != null ? f(r.sacosAdubo, 1) : '-';
+      vazio('p-res', false);
+    }, 'p-erro', 'p-res');
+  }
+  ['p-area','p-un','p-pop','p-germ','p-saco','p-kg','p-sacokg'].forEach(function(id){ $(id).addEventListener('input', calcPlanejar); });
+
+  function calcArea(){
+    if (!$('ar-val').value.trim()) { vazio('ar-res', true); $('ar-tab').innerHTML=''; return; }
+    seguro(function(){
+      var ha = P.areaEmHa($('ar-val').value, $('ar-un').value);
+      $('ar-ha').innerHTML = f(ha, 3) + ' <small>ha</small>';
+      $('ar-tab').innerHTML = Object.keys(P.UNIDADES_AREA).filter(function(k){ return k !== 'hectare'; }).map(function(k){
+        var u = P.UNIDADES_AREA[k]; return '<tr><td>' + u.nome + '</td><td class="n">' + f(ha * 10000 / u.m2, k === 'metro_quadrado' ? 0 : 2) + '</td></tr>';
+      }).join('');
+      vazio('ar-res', false);
+    }, 'ar-erro', 'ar-res');
+  }
+  ['ar-val','ar-un'].forEach(function(id){ $(id).addEventListener('input', calcArea); });
+
+  // Minhas plantadeiras
+  function listarMaquinas(){
+    var ms = ler('pnm_maquinas', []), box = $('m-lista');
+    if (!ms.length){ box.innerHTML = '<p class="vazio-txt">Nenhuma plantadeira salva ainda.</p>'; return; }
+    box.innerHTML = ms.map(function(m,i){ return '<div class="lista-item"><div><b>' + escapar(m.nome) + '</b><br><small>' + m.linhas + ' linhas · ' + m.esp + ' cm</small></div><div><button data-usar="' + i + '" style="color:var(--oliva);font-weight:700">Usar</button> <button data-del-m="' + i + '">Apagar</button></div></div>'; }).join('');
+  }
+  function escapar(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  $('m-salvar').addEventListener('click', function(){
+    var nome = $('m-nome').value.trim(), lin = $('m-lin').value.trim(), esp = $('m-esp').value.trim();
+    if (!nome || !lin || !esp){ $('m-erro').textContent = 'Preencha nome, linhas e espaçamento.'; return; }
+    $('m-erro').textContent = '';
+    var ms = ler('pnm_maquinas', []); ms.push({ nome: nome, linhas: lin, esp: esp });
+    toast(gravar('pnm_maquinas', ms) ? 'Plantadeira salva' : 'Não foi possível salvar neste navegador');
+    $('m-nome').value = $('m-lin').value = $('m-esp').value = ''; listarMaquinas();
+  });
+  $('m-lista').addEventListener('click', function(e){
+    var ms = ler('pnm_maquinas', []);
+    if (e.target.dataset.delM != null){ ms.splice(+e.target.dataset.delM, 1); gravar('pnm_maquinas', ms); listarMaquinas(); }
+    if (e.target.dataset.usar != null){ usarMaquina(ms[+e.target.dataset.usar]); toast('Plantadeira escolhida'); ir('inicio'); }
+  });
+  function usarMaquina(m){
+    if (!m) return;
+    document.querySelectorAll('.campo-esp').forEach(function(i){ i.value = m.esp; });
+    document.querySelectorAll('.campo-lin').forEach(function(i){ i.value = m.linhas; });
+    gravar('pnm_maquina_ativa', m);
+  }
+  usarMaquina(ler('pnm_maquina_ativa', null));
+
+  // Histórico
+  document.querySelectorAll('[data-salvar]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var t = ultimo[b.dataset.salvar];
+      if (!t){ toast('Faça o cálculo primeiro'); return; }
+      var h = ler('pnm_historico', []);
+      h.unshift({ quando: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }), texto: t });
+      toast(gravar('pnm_historico', h.slice(0, 200)) ? 'Salvo no histórico' : 'Não foi possível salvar neste navegador');
+    });
+  });
+  function listarHistorico(){
+    var h = ler('pnm_historico', []), box = $('h-lista');
+    if (!h.length){ box.innerHTML = '<p class="vazio-txt">Nada salvo ainda. Use o botão "Salvar no histórico" depois de cada cálculo.</p>'; return; }
+    box.innerHTML = h.map(function(x,i){ return '<div class="lista-item"><div><small>' + escapar(x.quando) + '</small><br>' + escapar(x.texto) + '</div><button data-del-h="' + i + '">Apagar</button></div>'; }).join('');
+  }
+  $('h-lista').addEventListener('click', function(e){
+    if (e.target.dataset.delH != null){ var h = ler('pnm_historico', []); h.splice(+e.target.dataset.delH, 1); gravar('pnm_historico', h); listarHistorico(); }
+  });
+
+  // Abre na tela do endereço (#adubo etc.)
+  ir(location.hash.slice(1) || 'inicio');
+  montarLinhasAdubo();
+
+  // Funciona sem internet depois do primeiro acesso.
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#34452B"/>
+  <!-- régua -->
+  <rect x="86" y="318" width="340" height="62" rx="12" fill="#F4B831"/>
+  <g stroke="#242824" stroke-width="10" stroke-linecap="round">
+    <line x1="126" y1="318" x2="126" y2="352"/><line x1="168" y1="318" x2="168" y2="340"/>
+    <line x1="210" y1="318" x2="210" y2="352"/><line x1="252" y1="318" x2="252" y2="340"/>
+    <line x1="294" y1="318" x2="294" y2="352"/><line x1="336" y1="318" x2="336" y2="340"/>
+    <line x1="378" y1="318" x2="378" y2="352"/>
+  </g>
+  <!-- sementes caindo na linha -->
+  <g fill="#E5DFD2">
+    <ellipse cx="168" cy="250" rx="22" ry="30"/>
+    <ellipse cx="256" cy="200" rx="22" ry="30"/>
+    <ellipse cx="344" cy="250" rx="22" ry="30"/>
+  </g>
+  <path d="M256 92 v54 M232 124 l24 24 24-24" stroke="#F4B831" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,2 @@
+User-agent: *
+Disallow: /app-k7m2q9/

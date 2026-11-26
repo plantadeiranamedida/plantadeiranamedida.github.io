@@ -1,1 +1,269 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Plantadeira na Medida</title></head><body style="font-family:sans-serif;display:grid;place-items:center;height:100vh;margin:0;background:#34452B;color:#fff"><p>Plantadeira na Medida: página em construção.</p></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plantadeira na Medida: a conta pronta da regulagem de sementes e adubo</title>
+<meta name="description" content="Tabelas prontas, manual visual e calculadora para saber quantas sementes e quantos gramas de adubo precisam cair em cada linha da plantadeira.">
+<meta property="og:title" content="Plantadeira na Medida">
+<meta property="og:description" content="As contas de regulagem da sua plantadeira já estão prontas.">
+<meta property="og:image" content="https://plantadeiranamedida.github.io/img/capa-campo.jpg">
+<link rel="icon" href="app-k7m2q9/icone.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1463332941871866');fbq('track','PageView');fbq('track','ViewContent',{content_name:'Plantadeira na Medida',currency:'BRL',value:67});
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1463332941871866&ev=PageView&noscript=1"/></noscript>
+<style>
+:root{--oliva:#34452B;--oliva2:#46593a;--amarelo:#F4B831;--grafite:#242824;--bege:#E5DFD2;--bege2:#F3EFE6;--branco:#fff;--linha:#d8d1c2}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bege2);color:var(--grafite);font-family:Inter,system-ui,sans-serif;font-size:17px;line-height:1.6}
+h1,h2,h3,.btn,.preco{font-family:Archivo,Inter,sans-serif}
+img{max-width:100%;display:block}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+section{padding:56px 0}
+.btn{display:inline-block;background:var(--amarelo);color:var(--grafite);font-weight:800;font-size:19px;text-decoration:none;padding:18px 26px;border-radius:14px;box-shadow:0 4px 0 #b9851b;text-align:center;transition:transform .1s}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 #b9851b}
+.btn.cheio{display:block;width:100%}
+.selo{display:inline-block;background:rgba(244,184,49,.18);color:var(--amarelo);border:1px solid rgba(244,184,49,.5);font-weight:700;font-size:13px;letter-spacing:.8px;text-transform:uppercase;padding:6px 12px;border-radius:999px}
+.topo{background:var(--oliva);color:#fff;padding:28px 0 48px;overflow:hidden}
+.topo .grade{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center}
+.topo h1{font-size:clamp(32px,5.2vw,54px);line-height:1.05;margin:16px 0 14px;font-weight:900;letter-spacing:-.5px}
+.topo h1 em{font-style:normal;color:var(--amarelo)}
+.topo p.sub{font-size:19px;opacity:.93;margin:0 0 22px}
+.topo ul{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:8px;font-size:15.5px}
+.topo li::before{content:'✓';color:var(--amarelo);font-weight:800;margin-right:8px}
+.hero-img{border-radius:18px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35);aspect-ratio:1/1;background:#46593a}
+.hero-img img{width:100%;height:100%;object-fit:cover}
+.conta{background:var(--grafite);color:#fff;border-radius:20px;padding:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:-28px;position:relative;z-index:2}
+.conta div{background:rgba(255,255,255,.05);border-radius:14px;padding:16px}
+.conta b{display:block;font-family:Archivo;font-size:34px;color:var(--amarelo);line-height:1.05}
+.conta span{font-size:14.5px;opacity:.85}
+.conta .tit{grid-column:1/-1;background:none;padding:0 0 4px;font-size:15px;opacity:.9}
+.historia{max-width:720px}
+.historia h2,.sec h2{font-size:clamp(26px,3.6vw,38px);line-height:1.15;margin:0 0 18px;font-weight:800}
+.historia p{font-size:18.5px}
+.destaque{background:#fff;border-left:6px solid var(--amarelo);padding:16px 20px;border-radius:0 12px 12px 0;font-size:18px;margin:22px 0}
+.passos{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.passo{background:#fff;border:1px solid var(--linha);border-radius:16px;padding:20px}
+.passo i{font-style:normal;display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--amarelo);font-family:Archivo;font-weight:900;font-size:20px;margin-bottom:10px}
+.passo b{display:block;font-family:Archivo;font-size:18px;margin-bottom:4px}
+.passo span{font-size:15px;color:#555a51}
+.carrossel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 18px;margin-top:20px}
+.carrossel figure{flex:0 0 min(78%,300px);margin:0;scroll-snap-align:start}
+.carrossel img{border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.18);background:#fff;aspect-ratio:210/297;object-fit:cover}
+.carrossel figcaption{font-size:14px;color:#555a51;margin-top:8px}
+.dica-arraste{font-size:14px;color:#6b6f65}
+.recebe{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:22px}
+.item{background:#fff;border:1px solid var(--linha);border-radius:16px;padding:22px}
+.item h3{margin:0 0 6px;font-size:21px}
+.item .tag{display:inline-block;background:var(--oliva);color:#fff;font-size:12.5px;font-weight:700;border-radius:999px;padding:3px 10px;margin-bottom:10px}
+.item p{margin:0;font-size:16px;color:#3d4139}
+.ad{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+.ad div{border-radius:16px;padding:22px}
+.ad .antes{background:#fff;border:1px solid var(--linha)}
+.ad .depois{background:var(--oliva);color:#fff}
+.ad h3{margin:0 0 10px;font-size:20px}
+.ad ul{margin:0;padding-left:20px}
+.ad li{margin-bottom:6px}
+.planos{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px;align-items:stretch}
+.plano{background:#fff;border:2px solid var(--linha);border-radius:20px;padding:26px;display:flex;flex-direction:column}
+.plano.pro{border-color:var(--oliva);box-shadow:0 14px 36px rgba(52,69,43,.22);position:relative}
+.plano.pro::before{content:'Recomendado';position:absolute;top:-14px;left:24px;background:var(--amarelo);font-family:Archivo;font-weight:800;font-size:13px;padding:5px 12px;border-radius:999px}
+.plano h3{margin:0;font-size:23px}
+.plano .preco{font-size:46px;font-weight:900;color:var(--oliva);margin:10px 0 0;line-height:1}
+.plano .preco small{font-size:17px;color:#555a51;font-weight:600}
+.plano .unico{font-size:14px;color:#6b6f65;margin-bottom:14px}
+.plano ul{list-style:none;padding:0;margin:0 0 22px;flex:1}
+.plano li{padding:7px 0;border-bottom:1px solid #eee7da;font-size:16px}
+.plano li::before{content:'✓ ';color:var(--oliva);font-weight:800}
+.plano li.nao{color:#9a9488}
+.plano li.nao::before{content:'× ';color:#c9c1b0}
+.garantia{display:flex;gap:16px;align-items:center;background:#fff;border:1px dashed var(--oliva);border-radius:16px;padding:18px 20px;margin-top:22px}
+.garantia b{font-family:Archivo;font-size:30px;color:var(--oliva);white-space:nowrap}
+details{background:#fff;border:1px solid var(--linha);border-radius:14px;padding:16px 18px;margin-bottom:10px}
+summary{font-family:Archivo;font-weight:700;font-size:18px;cursor:pointer}
+details p{margin:10px 0 0;color:#3d4139}
+footer{background:var(--grafite);color:#c9cdc2;font-size:14px;padding:32px 0 110px}
+footer a{color:#fff}
+.barra{position:fixed;left:0;right:0;bottom:0;background:rgba(36,40,36,.97);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:none;z-index:20}
+.barra .btn{display:block;width:100%;padding:15px;font-size:18px}
+.cookies{position:fixed;left:16px;right:16px;bottom:86px;max-width:560px;margin:0 auto;background:#fff;border:1px solid var(--linha);border-radius:14px;padding:14px 16px;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.18);z-index:30;display:none}
+.cookies button{margin-top:8px;background:var(--oliva);color:#fff;border:0;border-radius:10px;padding:9px 16px;font:inherit;font-weight:700}
+@media (max-width:820px){
+  .topo .grade,.recebe,.ad,.planos{grid-template-columns:1fr}
+  .passos{grid-template-columns:1fr 1fr}
+  .conta{grid-template-columns:1fr;margin-top:-20px}
+  .barra{display:block}
+  section{padding:44px 0}
+}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="wrap grade">
+    <div>
+      <span class="selo">Kit de campo · plantadeira de linhas</span>
+      <h1>As contas de regulagem da sua plantadeira <em>já estão prontas.</em></h1>
+      <p class="sub">Descubra quantos gramas de adubo e quantas sementes precisam cair em cada linha, com tabelas prontas e um passo a passo para conferir no campo.</p>
+      <a class="btn" href="#planos">Quero a conta pronta</a>
+      <ul>
+        <li>Manual visual, livro de tabelas e fichas de registro</li>
+        <li>No celular ou impresso, funciona sem internet</li>
+        <li>Calculadora no celular no plano PRO</li>
+      </ul>
+    </div>
+    <div class="hero-img"><img src="img/hero.jpg" alt="Kit Plantadeira na Medida: manual e tabelas para regular a plantadeira" onerror="this.onerror=null;this.src='img/capa-campo.jpg'"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="conta">
+    <div class="tit">Exemplo: dose de 300 kg/ha, linhas de 45 cm, teste em 50 metros. A conta pronta:</div>
+    <div><b>13,5 g</b><span>de adubo por metro de linha</span></div>
+    <div><b>675 g</b><span>para coletar em cada linha</span></div>
+    <div><b>2,7</b><span>sementes por metro (60 mil/ha)</span></div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap historia">
+    <h2>Fim de tarde no barracão. A plantadeira parada, o caderno aberto e a conta que não fecha.</h2>
+    <p>Você sabe a dose de adubo que quer jogar. Sabe a população de sementes. O que trava é transformar isso no número que interessa na hora de regular: <b>quantos gramas têm que cair em cada linha</b> e <b>quantas sementes por metro</b>.</p>
+    <p>Aí começa a regra de três. Um vídeo explica de um jeito, outro de outro. Você copia a conta, o resultado dá diferente. A caneta e o papel vão para o bolso, a plantadeira vai para o campo, e a dúvida vai junto: será que está caindo certo?</p>
+    <div class="destaque">Os vídeos ensinam a fazer a conta. <b>O Plantadeira na Medida entrega a conta pronta.</b></div>
+    <p>Você acha a sua dose na linha, o seu espaçamento na coluna, e pronto: está ali quanto precisa cair. Depois, o manual mostra como coletar, pesar, contar e conferir, linha por linha, para sair para o plantio sabendo o que a máquina está soltando.</p>
+    <a class="btn" href="#planos">Ver os planos</a>
+  </div>
+</section>
+
+<section style="background:#fff">
+  <div class="wrap sec">
+    <h2>Como funciona, em 4 passos</h2>
+    <div class="passos">
+      <div class="passo"><i>1</i><b>Informe</b><span>espaçamento, kg/ha de adubo e sementes por hectare do seu planejamento</span></div>
+      <div class="passo"><i>2</i><b>Encontre</b><span>a conta pronta na tabela ou na calculadora</span></div>
+      <div class="passo"><i>3</i><b>Colete</b><span>no trecho de teste, linha por linha</span></div>
+      <div class="passo"><i>4</i><b>Confira</b><span>compare, ajuste e anote para a próxima safra</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <h2>Veja por dentro</h2>
+    <p class="dica-arraste">Arraste para o lado e veja algumas páginas do kit.</p>
+    <div class="carrossel">
+      <figure><img src="img/pag-tabela-adubo.png" alt="Tabela de adubo em 50 metros" loading="lazy"><figcaption>Tabela pronta: gramas por linha em 50 m</figcaption></figure>
+      <figure><img src="img/pag-quantos-gramas.png" alt="Página quantos gramas precisam cair" loading="lazy"><figcaption>A conta pronta e onde achar</figcaption></figure>
+      <figure><img src="img/pag-media.png" alt="Página a média pode esconder diferenças" loading="lazy"><figcaption>Conferência linha por linha</figcaption></figure>
+      <figure><img src="img/pag-catracas.png" alt="Página relações de catracas" loading="lazy"><figcaption>Catracas sem mistério</figcaption></figure>
+      <figure><img src="img/pag-tabela-sementes.png" alt="Tabela de sementes em 50 metros" loading="lazy"><figcaption>Sementes por linha em 50 m</figcaption></figure>
+      <figure><img src="img/pag-ficha.png" alt="Ficha de coleta de adubo" loading="lazy"><figcaption>Fichas para imprimir e anotar</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section style="background:#fff">
+  <div class="wrap sec">
+    <h2>O que você recebe</h2>
+    <div class="recebe">
+      <div class="item"><span class="tag">Parte 1</span><h3>Manual Visual</h3><p>Conheça a plantadeira, prepare o teste, regule o adubo e as sementes e faça a conferência final. Um exemplo do começo ao fim, com desenhos e fotos.</p></div>
+      <div class="item"><span class="tag">Parte 2</span><h3>Livro de Tabelas Prontas</h3><p>40 páginas de conta pronta: adubo por metro e em 10, 20 e 50 m; sementes por metro e por trecho; peso coletado em kg/ha; catracas; alqueire e tarefa.</p></div>
+      <div class="item"><span class="tag">Parte 3</span><h3>Fichas de Registro</h3><p>Cadastro da máquina, planejamento, checklist, coletas, falhas e duplas, Caderno das Catracas e histórico por safra. Imprima quantas vezes quiser.</p></div>
+      <div class="item"><span class="tag">Plano PRO</span><h3>Calculadora no celular</h3><p>Para os valores que não estão na tabela: informe os números e veja o resultado na hora. Confere a coleta de cada linha e sugere a troca de catracas. Funciona até sem sinal.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <h2>Antes e depois</h2>
+    <div class="ad">
+      <div class="antes"><h3>Sem a conta pronta</h3><ul><li>Regra de três no papel a cada troca de semente ou adubo</li><li>Resultado diferente a cada vídeo</li><li>Regular no olho e torcer para dar certo</li><li>Começar do zero toda safra</li></ul></div>
+      <div class="depois"><h3>Com o Plantadeira na Medida</h3><ul><li>O número certo na linha e na coluna</li><li>Coleta e conferência linha por linha</li><li>Ajuste com base no que foi medido</li><li>A regulagem anotada para a próxima safra</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="planos" style="background:#fff">
+  <div class="wrap sec">
+    <h2>Escolha o seu kit</h2>
+    <div class="planos">
+      <div class="plano">
+        <h3>Kit de Campo</h3>
+        <div class="preco">R$ 47 <small>à vista</small></div>
+        <div class="unico">Pagamento único</div>
+        <ul>
+          <li>Manual Visual</li>
+          <li>Livro de Tabelas Prontas</li>
+          <li>Fichas de Registro</li>
+          <li>PDF para celular e para imprimir</li>
+          <li class="nao">Calculadora no celular</li>
+          <li class="nao">Bônus do PRO</li>
+        </ul>
+        <a class="btn cheio checkout" data-plano="Kit de Campo" data-valor="47" href="https://pay.cakto.com.br/ztf2drf_1373095">Quero o Kit de Campo</a>
+      </div>
+      <div class="plano pro">
+        <h3>Kit de Campo PRO</h3>
+        <div class="preco">R$ 67 <small>à vista</small></div>
+        <div class="unico">Pagamento único</div>
+        <ul>
+          <li>Tudo do Kit de Campo</li>
+          <li>Calculadora no celular (funciona sem sinal)</li>
+          <li>Conferência da coleta linha por linha</li>
+          <li>Sugestão de troca de catracas</li>
+          <li>Bônus: Checklist Antes de Plantar</li>
+          <li>Bônus: Caderno das Catracas</li>
+          <li>Bônus: Guia Visual de Falhas e Duplas</li>
+        </ul>
+        <a class="btn cheio checkout" data-plano="Kit de Campo PRO" data-valor="67" href="https://pay.cakto.com.br/36nrbgf_1373081">Quero o Kit PRO</a>
+      </div>
+    </div>
+    <div class="garantia"><b>7 dias</b><span>de garantia. Recebeu, olhou e não serviu para você? Peça o reembolso dentro do prazo, pelo e-mail de suporte, sem complicação.</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <h2>Perguntas frequentes</h2>
+    <details><summary>Serve para a minha plantadeira?</summary><p>O kit foi feito para plantadeiras de linhas (tratorizadas). As contas e o método de coleta e conferência valem para qualquer marca, porque usam espaçamento, distância, peso e contagem. O jeito de ajustar cada peça é o do manual do fabricante da sua máquina.</p></details>
+    <details><summary>O kit diz qual dose de adubo ou população usar?</summary><p>Não. Esses valores vêm do seu planejamento e do responsável técnico. O kit transforma esses números na conta da regulagem (gramas por linha, sementes por metro) e ensina a conferir.</p></details>
+    <details><summary>Como eu recebo?</summary><p>Na hora, no e-mail usado na compra, com o acesso ao PDF. No plano PRO, também o link da calculadora para salvar na tela do celular.</p></details>
+    <details><summary>Precisa de internet no campo?</summary><p>O PDF, depois de baixado, abre sem internet. A calculadora funciona sem sinal depois de aberta uma vez com internet.</p></details>
+    <details><summary>Posso imprimir?</summary><p>Pode. O PDF está no tamanho A4 e as fichas foram feitas para imprimir quantas vezes você quiser.</p></details>
+    <details><summary>É um curso?</summary><p>Não. É uma ferramenta de consulta: abre na página do assunto, acha o número e confere. Sem aula para assistir.</p></details>
+    <p style="text-align:center;margin-top:26px"><a class="btn" href="#planos">Quero a conta pronta</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Plantadeira na Medida</b> · material educativo de apoio à regulagem e conferência de plantadeiras. Não substitui o responsável técnico nem o manual do fabricante. Não recomenda doses, populações ou defensivos.</p>
+    <p>Empresarial Digital · CNPJ 65.243.789/0001-97 · contato: contato.empresarialdigtal@gmail.com</p>
+    <p><a href="privacidade.html">Política de privacidade</a></p>
+  </div>
+</footer>
+
+<div class="barra"><a class="btn" href="#planos">Quero a conta pronta</a></div>
+<div class="cookies" id="cookies">Usamos cookies para medir as visitas que vêm dos nossos anúncios. Saiba mais na <a href="privacidade.html">política de privacidade</a>.<br><button id="cookies-ok">Entendi</button></div>
+
+<script>
+(function(){
+  // Leva as UTMs para o checkout (UTMify) e marca a intenção de compra no pixel.
+  var q = location.search.replace(/^\?/, '');
+  document.querySelectorAll('a.checkout').forEach(function(a){
+    if (q) a.href = a.href + (a.href.indexOf('?') > -1 ? '&' : '?') + q;
+    a.addEventListener('click', function(){ if (window.fbq) fbq('track', 'InitiateCheckout', {content_name: a.dataset.plano, currency: 'BRL', value: parseFloat(a.dataset.valor)}); });
+  });
+  try { if (!localStorage.getItem('pnm_cookies')) document.getElementById('cookies').style.display = 'block'; } catch(e) { document.getElementById('cookies').style.display = 'block'; }
+  document.getElementById('cookies-ok').addEventListener('click', function(){ try { localStorage.setItem('pnm_cookies', '1'); } catch(e){} document.getElementById('cookies').style.display = 'none'; });
+})();
+</script>
+</body>
+</html>
